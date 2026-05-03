@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: autoagent-backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    volumes:
+      - chroma_data:/app/data/chroma_db
+      - uploads_data:/app/data/uploads
+    ports:
+      - "8000:8000"
+    networks:
+      - autoagent-net
+
+volumes:
+  chroma_data:
+  uploads_data:
+
+networks:
+  autoagent-net:
+    driver: bridge
